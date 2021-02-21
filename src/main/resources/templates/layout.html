@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">SCA</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" th:href="@{/css/fontawesome-free/css/all.min.css}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- pace-progress -->
+<link rel="stylesheet" th:href="@{/css/pace-progress/themes/black/pace-theme-flat-top.css}">
+<!-- adminlte-->
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}">
+<!-- toast CSS-->
+<link rel="stylesheet" th:href="@{/css/toastr.min.css}">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini pace-primary">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i class="fas fa-bars"></i>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li>
+          <div class="user-panel d-flex">
+            <div class="info">
+              <a href="#">Alexander Pierce</a>
+              |
+              <a onclick="document.querySelector('#form-logout').submit()" href="#">Sair <i class="fas fa-sign-out-alt"></i></a>
+              <form id="form-logout" th:action="@{/logout}" method="post"></form>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <div th:replace="~{fragments/_menu}"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="clearfix mb-3">
+            <div class="float-left">
+              <h1 layout:fragment="titulo"></h1>
+            </div>
+
+            <div class="float-right">
+              <span layout:fragment="botao"></span>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content" layout:fragment="conteudo"></section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b>
+        1.0.0
+      </div>
+      <strong>
+    
+        Copyright &copy; 2020-  <label id="dataAtualRodape"></label>
+        <a href="http://adminlte.io">AdminLTE.io</a>
+        .
+      </strong>
+      All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script th:src="@{/js/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap 4 -->
+  <script th:src="@{/js/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <!-- pace-progress -->
+  <script th:src="@{/css/pace-progress/pace.min.js}"></script>
+  <!-- AdminLTE App -->
+  <script th:src="@{/js/adminlte.min.js}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script th:src="@{/js/demo.js}"></script>
+  <!-- MASK -->
+  <script th:src="@{/js/moment.min.js}"></script>
+  <script th:src="@{/js/jquery.inputmask.bundle.min.js}"></script>
+  <!-- FIM MASK -->
+  <!-- TOAST SWEETALERT -->
+
+  <script th:src="@{/js/sweetalert2.all.js}"></script>
+  <script th:src="@{/js/toastr.min.js}"></script>
+  <!-- FIM TOAST SWEETALERT  -->
+
+  <!-- DELETE MODAL -->
+  <script th:inline="javascript">
+			$('#modal-delete').on('show.bs.modal', function(event) {
+				var button = $(event.relatedTarget)
+				var id = button.data('id');
+				var url = button.data('url');
+				$('#idModalLink').attr("href", url + id);
+			})
+			$(":input").inputmask();
+			
+			
+			//funcao verifica senhas iguais no front-end
+			$(".verificaSenha").blur(function() {
+				senha1 = $("#senha1").val();
+				senha2 = $("#senha2").val();
+				const Toast = Swal.mixin({
+					toast : true,
+					position : 'top-end',
+					showConfirmButton : false,
+					timer : 3000
+				});
+
+				if(!senha1   || !senha2 ){
+					toastr.warning('Digite uma senha antes de processeguir  !!!!')
+					$("#botaoSalvarUser").hide();
+					
+				}else if((!senha1 && !senha2) || senha1 == senha2){
+					
+					toastr.success('Senhas são iguais!!!!')
+					$("#botaoSalvarUser").show();
+				}
+				else {
+					toastr.error('Senhas são diferentes !!!!')
+					$("#botaoSalvarUser").hide();
+					
+				}
+				senha1 = "";
+				senha2 = "";
+
+			});
+			// fim da função
+			
+			//funcao verifica email valido 
+			$("#email").blur(function(){
+			
+				var email = $('#email').val();
+			
+			
+				var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    			if (!filter.test(email)) {
+    				toastr.error('Informe um email valido !!!!')
+    				return false;
+    			}else{
+    				toastr.success('E-mail validado !!!!')
+    				return true;
+    			}
+			});
+			//fim da funcao verifica email 
+			
+			//pegar data atual 
+			$( document ).ready(function() {
+			var data = new Date();
+			 	       
+			 $( "#dataAtualRodape" ).text(data.getFullYear() );		    
+				
+			});
+		</script>
+</body>
+</html>

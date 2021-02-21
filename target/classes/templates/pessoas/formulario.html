@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Pessoas</title>
+</head>
+<body>
+  <h1 layout:fragment="titulo">Cadastro de Pessoas</h1>
+
+  <section layout:fragment="conteudo">
+     <form th:action="@{/pessoas/salvar}" th:object="${pessoa}" method="post" class="ml-3 mr-3">
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="nome">Nome *</label>
+          <input th:errorclass="is-invalid" th:field="*{nome}" type="text" class="form-control" placeholder="Nome completo">
+          <div th:errors="*{nome}" class="invalid-feedback"></div>
+        </div>
+     
+        <div class="form-group col-md-4">
+          <label for="inputPassword4">Email *</label>
+          <input th:errorclass="is-invalid" th:field="*{email}" class="form-control" id="email" placeholder="Email">
+          <div th:errors="*{email}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPassword4">Telefone</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fas fa-phone"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control" id="" data-inputmask="'mask': '(99) 9999-9999'" autocomplete="off" th:field="*{telefone}" />
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" id="id" th:field="*{id}" />
+
+      <div class="clearfix mb-1">
+        <div class="float-right">
+          <a th:href="@{/pessoas}" class="btn btn-default mr-1" role="buttom">
+            <i class="fas fa-arrow-left"></i>
+            Voltar
+          </a>
+	
+          <button type="submit" id="botaoSalvarUser" class="btn btn-primary"   >
+            <i class="fas fa-save"></i>
+            Salvar
+          </button>
+        
+        </div>
+      </div>
+
+    </form>
+
+  </section>
+
+</body>
+</html>

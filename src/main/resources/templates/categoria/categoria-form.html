@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Categorias</title>
+</head>
+<body>
+  <h1 layout:fragment="titulo">Categorias</h1>
+  <section layout:fragment="conteudo">
+    <form th:action="@{/categoria/formulario}" th:object="${categoria}" method="post" class="ml-3 mr-3">
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="descricao">Descrição *</label>
+          <input th:errorclass="is-invalid" th:field="*{descricao}" type="text" class="form-control" placeholder="Descrição">
+          <div th:errors="*{descricao}" class="invalid-feedback"></div>
+        </div>
+      </div>
+      <input type="hidden" id="id" th:field="*{id}" />
+      <div class="clearfix mb-1">
+        <div class="float-right">
+          <a th:href="@{/categoria}" class="btn btn-default mr-1" role="buttom">
+            <i class="fas fa-arrow-left"></i>
+            Voltar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            Salvar
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+</body>
+</html>

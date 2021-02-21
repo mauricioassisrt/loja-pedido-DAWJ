@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<div class="clearfix" th:if="${page.totalPages > 1}">
+  <ul class="pagination pagination-sm  float-left">
+    <li th:if="${!page.first}" class="page-item">
+      <a th:href="@{/cadastro/usuario(page='1')}" class="page-link">«</a>
+    </li>
+
+    <li th:if="${page.number < i+3 && page.number > i-3}" th:each="i: ${#numbers.sequence(1, page.totalPages)}"
+      th:classappend="${page.number+1 == i ? 'disabled' : ''}" class="page-item">
+      <a th:href="@{/cadastro/usuario(page=${i})}" class="page-link" href="#">[[${i}]]</a>
+    </li>
+
+    <li th:if="${!page.last}" class="page-item">
+      <a th:href="@{/cadastro/usuario(page=${page.totalPages})}" class="page-link">»</a>
+    </li>
+  </ul>
+</div>

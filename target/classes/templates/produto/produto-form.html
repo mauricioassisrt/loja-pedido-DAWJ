@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Produto</title>
+</head>
+<body>
+  <h1 layout:fragment="titulo">Cadastro de Produtos</h1>
+
+  <section layout:fragment="conteudo">
+    <form th:action="@{/produto/formulario}" th:object="${produto}" method="post" class="ml-3 mr-3">
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nome">Nome *</label>
+          <input th:errorclass="is-invalid" th:field="*{nome}" type="text" class="form-control" placeholder="Nome completo">
+          <div th:errors="*{nome}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="valorCompra">Vlr de Compra *</label>
+          <input th:errorclass="is-invalid" th:field="*{valorCompra}" type="number" step="0.010" class="form-control" placeholder="Valor de Compra">
+          <div th:errors="*{valorCompra}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="quantidade">Quantidade *</label>
+          <input th:errorclass="is-invalid" th:field="*{quantidade}" type="number" step="0.010" class="form-control" placeholder="Quantidade">
+          <div th:errors="*{quantidade}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="codBarras">Código de Barras</label>
+          <input th:errorclass="is-invalid" th:field="*{codBarras}" type="text" class="form-control" placeholder="Código de Barras">
+          <div th:errors="*{codBarras}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="codBarras">Unidade</label>
+          <select th:errorclass="is-invalid" th:field="*{unidade}" class="form-control">
+            <option th:value="0" selected></option>
+            <option th:each="uni: ${unidades}" th:value="${uni.id}" th:text="${uni.descricao}"></option>
+          </select>
+          <div th:errors="*{unidade}" class="invalid-feedback"></div>
+        </div>
+      </div>
+
+      <input type="hidden" id="id" th:field="*{id}" />
+
+      <div class="clearfix mb-1">
+        <div class="float-right">
+          <a th:href="@{/produto}" class="btn btn-default mr-1" role="buttom">
+            <i class="fas fa-arrow-left"></i>
+            Voltar
+          </a>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            Salvar
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <!-- texto pequeno - varchar(20) -->
+  <!-- texto medio - varchar(100) -->
+  <!-- texto gramde - varchar(255) -->
+
+  <changeSet id="1" author="valdenir">
+    <createSequence sequenceName="hibernate_sequence"
+      startValue="1" incrementBy="1" />
+  </changeSet>
+  <changeSet id="2" author="valdenir">
+    <createTable tableName="usuario">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_usuario"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="nome" type="varchar(255)" />
+      <column name="login" type="varchar(80)" />
+      <column name="senha" type="varchar(255)" />
+      <column name="dt_nascimento" type="date" />
+      <column name="email" type="varchar(255)" />
+      <column name="telefone" type="varchar(11)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="3" author="valdenir">
+    <createTable tableName="papel">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_papel"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="nome" type="varchar(80)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="4" author="valdenir">
+    <createTable tableName="permisao">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_permisao"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="id_usuario" type="long" />
+      <column name="id_papel" type="long" />
+    </createTable>
+  </changeSet>
+  <changeSet id="5" author="valdenir">
+    <addForeignKeyConstraint
+      baseColumnNames="id_usuario" baseTableName="permisao"
+      referencedColumnNames="id" referencedTableName="usuario"
+      constraintName="fk_permisao_usuario" />
+  </changeSet>
+  <changeSet id="6" author="valdenir">
+    <addForeignKeyConstraint
+      baseColumnNames="id_papel" baseTableName="permisao"
+      referencedColumnNames="id" referencedTableName="papel"
+      constraintName="fk_permisao_papel" />
+  </changeSet>
+  <changeSet id="7" author="valdenir">
+    <insert tableName="usuario">
+      <column name="id" valueSequenceNext="hibernate_sequence" />
+      <column name="nome" value="Administrador" />
+      <column name="login" value="adm" />
+      <column name="email" value="adm@email.com" />
+      <column name="senha"
+        value="$2a$10$8kodGC8nlO6T2O62H4f/w.yKglm.B36mAGWH.p/R3WMm/mncR7d6q" />
+    </insert>
+  </changeSet>
+  <changeSet id="8" author="valdenir">
+    <insert tableName="papel">
+      <column name="id" valueSequenceCurrent="hibernate_sequence" />
+      <column name="nome" value="ADM" />
+    </insert>
+  </changeSet>
+  <changeSet id="10" author="valdenir">
+    <insert tableName="permisao">
+      <column name="id" valueSequenceCurrent="hibernate_sequence" />
+      <column name="id_usuario" value="1" />
+      <column name="id_papel" value="1" />
+    </insert>
+  </changeSet>
+  <changeSet id="11" author="valdenir">
+    <createTable tableName="unidade">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_unidade"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="descricao" type="varchar(100)" />
+      <column name="sigla" type="varchar(20)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="12" author="valdenir">
+    <createTable tableName="produto">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_produto"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="nome" type="varchar(100)" />
+      <column name="valor_compra" type="double" />
+      <column name="quantidade" type="double" />
+      <column name="cod_barras" type="varchar(255)" />
+      <column name="id_unidade" type="long" />
+    </createTable>
+  </changeSet>
+  <changeSet id="13" author="valdenir">
+    <addForeignKeyConstraint
+      baseColumnNames="id_unidade" baseTableName="produto"
+      referencedColumnNames="id" referencedTableName="unidade"
+      constraintName="fk_produto_unidade" />
+  </changeSet>
+  <!-- Categoria -->
+  <changeSet id="14" author="mauricio">
+    <createTable tableName="categoria">
+      <column name="id" type="long" autoIncrement="true">
+        <constraints primaryKeyName="pk_categoria"
+          primaryKey="true" nullable="false" />
+      </column>
+      <column name="descricao" type="varchar(100)" />
+      
+    </createTable>
+  </changeSet>
+ 
+</databaseChangeLog> 

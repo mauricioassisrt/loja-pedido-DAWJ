@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AdminLTE 3 | Log in</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" th:href="@{/css/fontawesome-free/css/all.min.css}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- pace-progress -->
+<link rel="stylesheet" th:href="@{/css/pace-progress/themes/black/pace-theme-flat-top.css}">
+<!-- adminlte-->
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <b style="color: #666;">Sistema de Gestão</b>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Faça login para iniciar sua sessão</p>
+
+        <form th:action="@{/login}" method="post">
+          <div class="input-group mb-3">
+            <input name="username" class="form-control" placeholder="Usuário">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="password" type="password" class="form-control" placeholder="Senha">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+          <div th:if="${param.error}">Usuário e senha invalido.</div>
+          <div th:if="${param.logout}">Você foi desconectado.</div>
+
+          <hr />
+
+          <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+        </form>
+
+        <p class="mb-0">
+          <a href="#">Esqueceu sua senha?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script th:src="@{/js/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap 4 -->
+  <script th:src="@{/js/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <!-- AdminLTE App -->
+  <script th:src="@{/js/adminlte.min.js}"></script>
+
+</body>
+</html>

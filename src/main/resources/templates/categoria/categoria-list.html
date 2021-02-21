@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Categoria</title>
+</head>
+<body>
+  <h1 layout:fragment="titulo">Categorias </h1>
+  <div layout:fragment="botao">
+    <a class="btn btn-primary" th:href="@{/categoria/formulario}" role="button">
+      <i class="fas fa-plus"></i>
+      Nova
+    </a>
+  </div>
+
+  <section layout:fragment="conteudo">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+        
+          <th>Descrição</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="categoria : ${page.content}">
+          <td th:text="${categoria.id}"></td>
+          <td th:text="${categoria.descricao}"></td>
+         
+          <td class="text-center">
+            <a class="btn btn-sm" th:href="@{/categoria/formulario(id=${categoria.id})}">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a class="btn btn-sm" data-toggle="modal" data-target="#modal-delete" th:attr="data-id=${categoria.id}, data-url=@{/categoria/remover/}">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div th:replace="~{fragments/_paginacao}"></div>
+    <div th:replace="~{fragments/_modal-delete}"></div>
+
+  </section>
+
+</body>
+</html>

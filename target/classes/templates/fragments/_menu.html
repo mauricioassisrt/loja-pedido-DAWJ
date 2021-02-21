@@ -1,0 +1,70 @@
+<meta charset="utf-8">
+<!-- Brand Logo -->
+<span class="brand-link brand-text font-weight-light">SCA</span>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <!-- Sidebar Menu -->
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- Add icons to the links using the .nav-icon class
+            with font-awesome or any other icon font library -->
+      <li class="nav-item">
+        <a th:href="@{/}" class="nav-link">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p>Início</p>
+        </a>
+      </li>
+       <li class="nav-item">
+        <a th:href="@{/pedido}" class="nav-link">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p>Pedido</p>
+        </a>
+      </li>
+      <li class="nav-item has-treeview">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-copy"></i>
+          <p>
+            Cadastros
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a th:href="@{/usuario}" class="nav-link">
+              <i class="fas fa-users "></i>
+              <p> Usuários</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/pessoas}" class="nav-link">
+              <i class="fas fa-users "></i>
+              <p> Pessoas</p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a th:href="@{/produto}" class="nav-link">
+              <i class="fas fa-boxes"></i>
+              <p> Produtos</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/unidade}" class="nav-link">
+              <i class="fas fa-ruler "></i>
+              <p> Unidades</p>
+            </a>
+          </li>
+            <li class="nav-item">
+            <a th:href="@{/categoria}" class="nav-link">
+              <i class="fas fa-copyright "></i>
+              <p> Categorias </p>
+            </a>
+          </li>
+       
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->

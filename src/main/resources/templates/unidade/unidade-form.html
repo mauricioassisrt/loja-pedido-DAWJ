@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Unidade</title>
+</head>
+<body>
+  <h1 layout:fragment="titulo">Cadastro de Unidades</h1>
+  <section layout:fragment="conteudo">
+    <form th:action="@{/unidade/formulario}" th:object="${unidade}" method="post" class="ml-3 mr-3">
+
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="descricao">Descrição *</label>
+          <input th:errorclass="is-invalid" th:field="*{descricao}" type="text" class="form-control" placeholder="Descrição">
+          <div th:errors="*{descricao}" class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="sigla">Sigla *</label>
+          <input th:errorclass="is-invalid" th:field="*{sigla}" type="text" class="form-control" placeholder="Sigla">
+          <div th:errors="*{sigla}" class="invalid-feedback"></div>
+        </div>
+      </div>
+      <input type="hidden" id="id" th:field="*{id}" />
+      <div class="clearfix mb-1">
+        <div class="float-right">
+          <a th:href="@{/unidade}" class="btn btn-default mr-1" role="buttom">
+            <i class="fas fa-arrow-left"></i>
+            Voltar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            Salvar
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+</body>
+</html>
