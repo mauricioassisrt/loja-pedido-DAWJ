@@ -1,4 +1,5 @@
-# loja-pedido-DAWJ
+# loja-pedido-DAWJ 
+<h1> Sistema de Gestão de Pedidos </h1>
 Trabalho em grupo da disciplina de DAWJ 
 <br>
 Alunos: <br>
