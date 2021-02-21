@@ -1,5 +1,8 @@
 package br.com.nautilus.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,10 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.nautilus.base.BaseController;
+import br.com.nautilus.models.ItensPedido;
 import br.com.nautilus.models.Papel;
+import br.com.nautilus.models.Pedido;
 import br.com.nautilus.models.Permisao;
 import br.com.nautilus.models.Usuario;
+import br.com.nautilus.repository.ItensRepository;
 import br.com.nautilus.repository.PapelRepository;
+import br.com.nautilus.repository.PedidoRepository;
 import br.com.nautilus.repository.PermisaoRepository;
 import br.com.nautilus.repository.UsuarioRepository;
 import br.com.nautilus.services.UsuarioService;
@@ -23,11 +30,30 @@ public class HomeController extends BaseController<Usuario, UsuarioRepository, U
 	private PermisaoRepository repositorio;
 	@Autowired
 	private PapelRepository repPapel;
-
+	@Autowired
+	private PedidoRepository repositorioPedido;
+	@Autowired
+	private ItensRepository repositorioIten;
+	private List<ItensPedido> listaPedido = new ArrayList<>();
 	@GetMapping(value = "/")
 	public ModelAndView getPaginaHome() {
-
-		return new ModelAndView("home");
+		ModelAndView mv = new ModelAndView("home");
+		double valorEmVendas=0;
+		double quantidadeProdutosVendidos = 0;
+		int quantidadePedidos = repositorioPedido.findAll().size();
+		listaPedido = repositorioIten.findAll();
+		
+		for (ItensPedido iten : listaPedido) {
+			valorEmVendas += iten.getQuantidade() * iten.getObjetoProduto().getValorCompra().doubleValue();
+			quantidadeProdutosVendidos += iten.getQuantidade();
+		}
+		
+		System.out.println("VALOR EM VENDAS "+valorEmVendas+" QUANTIDADE DE  PEDIDOS "+quantidadePedidos+" Quantidade produtos vendidos "+quantidadeProdutosVendidos);
+		mv.addObject("valorEmVendas", valorEmVendas);
+		mv.addObject("quantidadeProdutosVendidos", quantidadeProdutosVendidos);
+		mv.addObject("quantidadePedidos", quantidadePedidos);
+		
+		return mv;
 
 	}
 

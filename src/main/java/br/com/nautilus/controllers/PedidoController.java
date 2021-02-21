@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +32,7 @@ import br.com.nautilus.repository.PessoaRepository;
 import br.com.nautilus.repository.ProdutoRepository;
 import br.com.nautilus.services.PedidoService;
 
-@RestController
-@RequestMapping("/pedido")
+@Controller
 public class PedidoController {
 	@Autowired
 	private PedidoRepository repositorioPedido;
@@ -44,17 +44,10 @@ public class PedidoController {
 	private ItensRepository repositorioItens;
 
 	private List<ItensPedido> itensLista = new ArrayList<>();
-	 public Double quantidadeItens =0., valorTotalPedido=0.;
-	@GetMapping
-	public ModelAndView getPaginaLista(Pageable pageable) {
-		Page<Pedido> list = repositorioPedido.findAll(pageable);
-		ModelAndView mv = new ModelAndView("/pedido/pedido-list");
-		mv.addObject("page", list);
+	public Double quantidadeItens = 0., valorTotalPedido = 0.;
 
-		return mv;
-	}
-
-	@GetMapping("/cadastrar")
+	
+	@GetMapping("pedido/cadastrar")
 	public ModelAndView cadastrar(Pedido pedidos, ItensPedido itensPedido, Produto produtos, Long id) {
 		ModelAndView mv = new ModelAndView("/pedido/pedido-form");
 		if (id != null) {
@@ -64,51 +57,50 @@ public class PedidoController {
 			mv.addObject("listaProdutos", repositorioProdutos.findAll());
 			mv.addObject("listaPessoas", repositorioPessoa.findAll());
 			mv.addObject("itensLista", this.itensLista);
-			mv.addObject("contador",quantidadeItens);
+			mv.addObject("contador", quantidadeItens);
 			mv.addObject("valorTotalPedido", valorTotalPedido);
 			mv.addObject("itens", itensPedido);
 			mv.addObject("pedidos", pedidos);
 			mv.addObject("produtos", produtos);
 		}
 
-		
-		
 		return mv;
 	}
 
-	@PostMapping("/salvar")
+	@PostMapping("pedido/salvar")
 	public ModelAndView salvar(String acao, Pedido pedidos, ItensPedido itensPedido, Produto produtos) {
-		ModelAndView mv = new ModelAndView("pedidos/formulario");
+		ModelAndView mv = new ModelAndView("pedido/pedido-form");
 		if (acao.equals("itens")) {
 			System.out.println();
-			
-			if(itensLista.size()==0) {
-				valorTotalPedido =itensPedido.getQuantidade()* itensPedido.getObjetoProduto().getValorCompra().doubleValue() ;
-				quantidadeItens+=quantidadeItens+itensPedido.getQuantidade();
+
+			if (itensLista.size() == 0) {
+				valorTotalPedido = itensPedido.getQuantidade()
+						* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
+				quantidadeItens += quantidadeItens + itensPedido.getQuantidade();
 				System.out.print("LINHA 72");
 				this.itensLista.add(itensPedido);
-				
-			}else {
+
+			} else {
 				for (ItensPedido item : itensLista) {
-					if(item.getObjetoProduto().getId().equals(itensPedido.getObjetoProduto().getId())) {
-						//Quantidade de produtos
-						quantidadeItens = (double) (item.getQuantidade()+itensPedido.getQuantidade());
-						
+					if (item.getObjetoProduto().getId().equals(itensPedido.getObjetoProduto().getId())) {
+						// Quantidade de produtos
+						quantidadeItens = (double) (item.getQuantidade() + itensPedido.getQuantidade());
+
 						break;
-					}else {
-						valorTotalPedido =itensPedido.getQuantidade()* itensPedido.getObjetoProduto().getValorCompra().doubleValue() ;
-						quantidadeItens+=quantidadeItens+itensPedido.getQuantidade();
-						System.out.print("LINHA 85 " +item.getObjetoProduto().getId());
-						
+					} else {
+						valorTotalPedido = itensPedido.getQuantidade()
+								* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
+						quantidadeItens += quantidadeItens + itensPedido.getQuantidade();
+						System.out.print("LINHA 85 " + item.getObjetoProduto().getId());
+
 						this.itensLista.add(itensPedido);
 						break;
 					}
-					
+
 				}
-				
+
 			}
-			
-			
+
 		} else if (acao.equals("salvar")) {
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -123,6 +115,7 @@ public class PedidoController {
 					itens.setObjetoPedido(pedidos);
 					repositorioItens.saveAndFlush(itens);
 				}
+				repositorioPedido.saveAndFlush(pedidos);
 				itensLista = new ArrayList<>();
 				return listar();
 
@@ -132,14 +125,13 @@ public class PedidoController {
 			}
 		}
 
-		// repositorioPedido.saveAndFlush(pedidos);
+		//
 		return cadastrar(pedidos, itensPedido, produtos, null);
 	}
 
-
 	@GetMapping("pedidos")
 	public ModelAndView listar() {
-		ModelAndView mv = new ModelAndView("pedidos/lista");
+		ModelAndView mv = new ModelAndView("pedido/pedido-list");
 		mv.addObject("listaPedidos", repositorioPedido.findAll());
 		return mv;
 	}
@@ -162,6 +154,5 @@ public class PedidoController {
 		return listar();
 
 	}
-
 
 }
