@@ -33,4 +33,42 @@ public class Produto extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "id_unidade")
 	private Unidade unidade;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public BigDecimal getValorCompra() {
+		return valorCompra;
+	}
+	public void setValorCompra(BigDecimal valorCompra) {
+		this.valorCompra = valorCompra;
+	}
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
+	}
+	public String getCodBarras() {
+		return codBarras;
+	}
+	public void setCodBarras(String codBarras) {
+		this.codBarras = codBarras;
+	}
+	public Unidade getUnidade() {
+		return unidade;
+	}
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
+	}
+	
+	
 }

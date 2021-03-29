@@ -26,6 +26,25 @@ public class Permisao extends BaseEntity {
 	@JoinColumn(name = "papel_id")
 	@ManyToOne
 	private Papel papel;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public Papel getPapel() {
+		return papel;
+	}
+	public void setPapel(Papel papel) {
+		this.papel = papel;
+	}
+	
 	
 
 }
