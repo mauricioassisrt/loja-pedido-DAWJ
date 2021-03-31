@@ -67,6 +67,8 @@
 									<tr>
 										<th>Produto</th>
 										<th>Quantidade</th>
+										<th>Valor</th>
+										<th>Total</th>
 
 										<th class="text-center">Ações</th>
 									</tr>
@@ -74,8 +76,10 @@
 								<tbody>
 									<tr th:each="itenspedido : ${itensLista}">
 										<td th:text="${itenspedido.objetoProduto.nome}"></td>
-										<td th:text="${itenspedido.objetoProduto.valorCompra}"></td>
 										<td th:text="${itenspedido.quantidade}"></td>
+										<td th:text="${itenspedido.objetoProduto.valorCompra}"></td>
+										<td th:text="${itenspedido.objetoProduto.valorCompra} * ${itenspedido.quantidade}"></td>
+										
 
 
 										<td class="text-center"><a class="btn btn-sm"> <i

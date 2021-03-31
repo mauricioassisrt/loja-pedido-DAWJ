@@ -76,7 +76,7 @@ public class PedidoController {
 			if (itensLista.size() == 0) {
 				valorTotalPedido = itensPedido.getQuantidade()
 						* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
-				quantidadeItens += quantidadeItens + itensPedido.getQuantidade();
+				quantidadeItens += itensPedido.getQuantidade();
 				System.out.print("LINHA 72");
 				this.itensLista.add(itensPedido);
 
@@ -84,13 +84,14 @@ public class PedidoController {
 				for (ItensPedido item : itensLista) {
 					if (item.getObjetoProduto().getId().equals(itensPedido.getObjetoProduto().getId())) {
 						// Quantidade de produtos
-						quantidadeItens = (double) (item.getQuantidade() + itensPedido.getQuantidade());
+//						quantidadeItens = (double) (item.getQuantidade() + itensPedido.getQuantidade());
+						quantidadeItens += itensPedido.getQuantidade();
 
 						break;
 					} else {
-						valorTotalPedido = itensPedido.getQuantidade()
+						valorTotalPedido += itensPedido.getQuantidade()
 								* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
-						quantidadeItens += quantidadeItens + itensPedido.getQuantidade();
+						quantidadeItens += itensPedido.getQuantidade();
 						System.out.print("LINHA 85 " + item.getObjetoProduto().getId());
 
 						this.itensLista.add(itensPedido);
