@@ -78,12 +78,15 @@
 										<td th:text="${itenspedido.objetoProduto.nome}"></td>
 										<td th:text="${itenspedido.quantidade}"></td>
 										<td th:text="${itenspedido.objetoProduto.valorCompra}"></td>
-										<td th:text="${itenspedido.objetoProduto.valorCompra} * ${itenspedido.quantidade}"></td>
-										
+										<td
+											th:text="${itenspedido.objetoProduto.valorCompra} * ${itenspedido.quantidade}"></td>
 
 
-										<td class="text-center"><a class="btn btn-sm"> <i
-												class="fas fa-trash-alt"></i>
+										<td class="text-center"><a class="btn btn-sm">
+												<button type="submit" name="acao" th:value="excluir"
+													class="btn btn-primary">
+													<i class="fas fa-trash-alt"></i>
+												</button>
 										</a></td>
 									</tr>
 								</tbody>

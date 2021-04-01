@@ -46,7 +46,6 @@ public class PedidoController {
 	private List<ItensPedido> itensLista = new ArrayList<>();
 	public Double quantidadeItens = 0., valorTotalPedido = 0.;
 
-	
 	@GetMapping("pedido/cadastrar")
 	public ModelAndView cadastrar(Pedido pedidos, ItensPedido itensPedido, Produto produtos, Long id) {
 		ModelAndView mv = new ModelAndView("/pedido/pedido-form");
@@ -70,6 +69,7 @@ public class PedidoController {
 	@PostMapping("pedido/salvar")
 	public ModelAndView salvar(String acao, Pedido pedidos, ItensPedido itensPedido, Produto produtos) {
 		ModelAndView mv = new ModelAndView("pedido/pedido-form");
+		boolean exist = false;
 		if (acao.equals("itens")) {
 			System.out.println();
 
@@ -81,23 +81,27 @@ public class PedidoController {
 				this.itensLista.add(itensPedido);
 
 			} else {
+
 				for (ItensPedido item : itensLista) {
 					if (item.getObjetoProduto().getId().equals(itensPedido.getObjetoProduto().getId())) {
 						// Quantidade de produtos
 //						quantidadeItens = (double) (item.getQuantidade() + itensPedido.getQuantidade());
+						item.setQuantidade(item.getQuantidade() + itensPedido.getQuantidade());
 						quantidadeItens += itensPedido.getQuantidade();
-
-						break;
-					} else {
 						valorTotalPedido += itensPedido.getQuantidade()
 								* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
-						quantidadeItens += itensPedido.getQuantidade();
-						System.out.print("LINHA 85 " + item.getObjetoProduto().getId());
-
-						this.itensLista.add(itensPedido);
+						System.out.println("IGUAL");
+						exist = true;
 						break;
 					}
+				}
+				if (!exist) {
+					valorTotalPedido += itensPedido.getQuantidade()
+							* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
+					quantidadeItens += itensPedido.getQuantidade();
+//					System.out.print("LINHA 85 " + item.getObjetoProduto().getId());
 
+					this.itensLista.add(itensPedido);
 				}
 
 			}
@@ -123,6 +127,18 @@ public class PedidoController {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		} if (acao.equals("excluir")) {
+			for (ItensPedido item : itensLista) {
+				if (item.getObjetoProduto().getId().equals(itensPedido.getObjetoProduto().getId())) {
+				
+					quantidadeItens -= itensPedido.getQuantidade();
+					valorTotalPedido -= itensPedido.getQuantidade()
+							* itensPedido.getObjetoProduto().getValorCompra().doubleValue();
+					this.itensLista.remove(itensPedido);
+					
+					break;
+				}
 			}
 		}
 
