@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class BaseEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 }
